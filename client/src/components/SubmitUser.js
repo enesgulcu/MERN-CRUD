@@ -25,27 +25,9 @@ export const SubmitUser = () => {
   }, [])
 
   return (   
-    <>  
-    {
-      allData.map((user_data)=>{ // list all user data
-        return <div key={user_data._id}>
-          <ul >
-            <li>ID:: {user_data._id}</li>             
-            <li>Name: {user_data.name}</li>
-            <li>Surname: {user_data.surname}</li>
-            <li>Age: {user_data.age}</li>
-            <li>Date: {user_data.createdAt}</li> 
-            <button onClick={()=> api.deleteUser(user_data._id)}>DELETE</button> <br />
-            <button onClick={()=> api.updateUser(user_data._id,userData)}>CHANGE</button>
-            <h5>
-            ### if you want to UPDATE data, please fill below inputs before click change button <br />
-            ### When you click a button, please refresh the page to see the change.
-            </h5>            
-            <hr />           
-          </ul>                    
-        </div>         
-    })}
-
+    <> 
+      <h2>MERN - CRUD - simple experiment</h2>
+      <hr />
         <button onClick={()=>console.log(allData)}>Fetch all data to Console!</button>
         <form onSubmit={(e)=>{  
           // sayfa submit sonrası yenilemesin diye tanımladık.
@@ -86,8 +68,28 @@ export const SubmitUser = () => {
               setUserData({...userData, age:e.target.value})
             }   
             /> <br/><br/>
-            <button type='submit'> SUBMIT </button> <br />        
+            <button type='submit'> Create New User </button> <br />        
         </form>
+         <hr />     
+        {     
+      allData.map((user_data)=>{ // list all user data
+        return <div key={user_data._id}>
+          <ul >
+            <li>ID:: {user_data._id}</li>             
+            <li>Name: {user_data.name}</li>
+            <li>Surname: {user_data.surname}</li>
+            <li>Age: {user_data.age}</li>
+            <li>Date: {user_data.createdAt}</li> 
+            <button onClick={()=> api.deleteUser(user_data._id)}>DELETE</button> <br />
+            <button onClick={()=> api.updateUser(user_data._id,userData)}>CHANGE</button>
+            <h5>
+            ### if you want to UPDATE data, please fill above inputs before click change button <br />
+            ### When you click a button, please refresh the page to see the change.
+            </h5>            
+            <hr />           
+          </ul>                    
+        </div>         
+    })}
     </>
   )
 }
