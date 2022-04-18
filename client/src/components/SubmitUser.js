@@ -23,37 +23,38 @@ export const SubmitUser = () => {
   getAllUsers();
 
   }, [])
-  
-
- 
-  
 
   return (   
     <>  
-    {        
-        allData.map((user_data)=>{
-            return <div key={user_data._id}>
-              <h5>ID:: {user_data._id}</h5>
-              <h5>Name: {user_data.name}</h5>
-              <h5>Surname: {user_data.surname}</h5>
-              <h5>Age: {user_data.age}</h5>
-              <h5>Date: {user_data.createdAt}</h5> 
-              <button onClick={()=> api.deleteUser(user_data._id)            }>SİL</button>
-              <button onClick={()=> api.updateUser(user_data._id, userData) }>Değiştir</button>
-              <hr />           
-            </div>
-            
-        })}
+    {
+      allData.map((user_data)=>{ // list all user data
+        return <div key={user_data._id}>
+          <ul >
+            <li>ID:: {user_data._id}</li>             
+            <li>Name: {user_data.name}</li>
+            <li>Surname: {user_data.surname}</li>
+            <li>Age: {user_data.age}</li>
+            <li>Date: {user_data.createdAt}</li> 
+            <button onClick={()=> api.deleteUser(user_data._id)}>DELETE</button> <br />
+            <button onClick={()=> api.updateUser(user_data._id,userData)}>CHANGE</button>
+            <h5>
+            ### if you want to UPDATE data, please fill below inputs before click change button <br />
+            ### When you click a button, please refresh the page to see the change.
+            </h5>            
+            <hr />           
+          </ul>                    
+        </div>         
+    })}
 
-        <button onClick={()=>console.log(allData)}>GETİR</button>
+        <button onClick={()=>console.log(allData)}>Fetch all data to Console!</button>
         <form onSubmit={(e)=>{  
           // sayfa submit sonrası yenilemesin diye tanımladık.
           e.preventDefault() 
           // axios içinde veriyi veri tabanına gönderecek olan fonksiyonu çağırdık.
           // verilerin toplandığı state objesini fonksiyona gönderdik.
           api.createUser(userData)
-        }}>
-            <label htmlFor="name">Name</label>
+        }}> <br />
+            <label htmlFor="name">Name: </label>
             <input
               id='name'
               name='name'
@@ -62,9 +63,9 @@ export const SubmitUser = () => {
                 // input ile girilen değeri state'e gönderdik.
                 setUserData({...userData, name:e.target.value})
               }  
-            />
+            /> <br/><br/>
         
-            <label htmlFor="surname">Surname</label>
+            <label htmlFor="surname">Surname: </label>
             <input
             id='surname'
             name='surname'
@@ -73,9 +74,9 @@ export const SubmitUser = () => {
               // input ile girilen değeri state'e gönderdik.
               setUserData({...userData, surname:e.target.value})
             }    
-            />
+            /> <br/><br/>
 
-            <label htmlFor="age">Age</label>
+            <label htmlFor="age">Age: </label>
             <input              
             id='age'
             name='age'
@@ -84,8 +85,8 @@ export const SubmitUser = () => {
               // input ile girilen değeri state'e gönderdik.
               setUserData({...userData, age:e.target.value})
             }   
-            />
-            <button type='submit'>Gönder</button>        
+            /> <br/><br/>
+            <button type='submit'> SUBMIT </button> <br />        
         </form>
     </>
   )

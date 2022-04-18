@@ -50,24 +50,33 @@ router.post('/', async (req,res)=>{
 });
 
 router.put('/:id',async (req,res)=>{
-    const {id} =  req.params //link deki sonunda olan id değerini yakalar.
+    try {
+        const {id} =  req.params //link deki sonunda olan id değerini yakalar.
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        res.status(404).json({message:'put verisi doğrulanamadı'})
-    }
-    // değişim için gönderilen verileri bod'den yakaladk ve aldık.
-    const {name, surname, age} = req.body;
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            res.status(404).json({message:'put verisi doğrulanamadı'})
+        }
+        // değişim için gönderilen verileri bod'den yakaladk ve aldık.
+        const {name, surname, age} = req.body;
 
-    const updateUser = await User.findByIdAndUpdate(
-        id, //eşleşdiği veriyi alır
-        {name,surname,age}, // soldak iverileri değiştirir
-        {new: true} 
+        const updateUser = await User.findByIdAndUpdate(
+            id, //eşleşdiği veriyi alır
+            {name,surname,age}, // soldaki verileri değiştirir
+            {new: true} 
         )
+    } catch (error) {
+        res.json({message: "User Update Failed"})
+    }
 });
 
 router.delete('/:id', async (req,res)=>{
-    const {id} =  req.params //link deki sonunda olan id değerini yakalar.
-    const deleteUser = await User.findByIdAndDelete(id);
+
+    try {
+        const {id} =  req.params //link deki sonunda olan id değerini yakalar.
+        const deleteUser = await User.findByIdAndDelete(id);
+    } catch (error) {
+        res.json({message: "User Delete Failed"})
+    }
 });
 
 export default router
